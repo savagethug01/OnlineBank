@@ -180,13 +180,7 @@ def bank(request):
                     if deposit_amount <= 0:
                         form.add_error('amount', "Deposit amount must be greater than zero.")
                     else:
-                        # Create a transaction record without deducting the balance
-                        Transaction.objects.create(
-                            user=user_profile.user,
-                            amount=deposit_amount,
-                            balance_after=user_profile.balance,  # Balance remains unchanged
-                            description='Pending'
-                        )
+                        request.session['pending_amount'] = deposit_amount
 
                         return redirect('imf')  # Redirect to dashboard view after processing the deposit
             except ValidationError as e:
@@ -216,13 +210,7 @@ def crypto(request):
                     if deposit_amount <= 0:
                         form.add_error('amount', "Deposit amount must be greater than zero.")
                     else:
-                        # Create a transaction record without deducting the balance
-                        Transaction.objects.create(
-                            user=user_profile.user,
-                            amount=deposit_amount,
-                            balance_after=user_profile.balance,  # Balance remains unchanged
-                            description='Pending'
-                        )
+                        request.session['pending_amount'] = deposit_amount
 
                         return redirect('imf')  # Redirect to dashboard view after processing the deposit
             except ValidationError as e:
@@ -252,13 +240,7 @@ def paypal(request):
                     if deposit_amount <= 0:
                         form.add_error('amount', "Deposit amount must be greater than zero.")
                     else:
-                        # Create a transaction record without deducting the balance
-                        Transaction.objects.create(
-                            user=user_profile.user,
-                            amount=deposit_amount,
-                            balance_after=user_profile.balance,  # Balance remains unchanged
-                            description='Pending'
-                        )
+                        request.session['pending_amount'] = deposit_amount
 
                         return redirect('imf')  # Redirect to dashboard view after processing the deposit
             except ValidationError as e:
@@ -321,13 +303,7 @@ def skrill(request):
                     if deposit_amount <= 0:
                         form.add_error('amount', "Deposit amount must be greater than zero.")
                     else:
-                        # Create a transaction record without deducting the balance
-                        Transaction.objects.create(
-                            user=user_profile.user,
-                            amount=deposit_amount,
-                            balance_after=user_profile.balance,  # Balance remains unchanged
-                            description='Pending'
-                        )
+                        request.session['pending_amount'] = deposit_amount
 
                         return redirect('imf')  # Redirect to dashboard view after processing the deposit
             except ValidationError as e:
@@ -357,13 +333,7 @@ def G_pay(request):
                     if deposit_amount <= 0:
                         form.add_error('amount', "Deposit amount must be greater than zero.")
                     else:
-                        # Create a transaction record without deducting the balance
-                        Transaction.objects.create(
-                            user=user_profile.user,
-                            amount=deposit_amount,
-                            balance_after=user_profile.balance,  # Balance remains unchanged
-                            description='Pending'
-                        )
+                        request.session['pending_amount'] = deposit_amount
 
                         return redirect('imf')  # Redirect to dashboard view after processing the deposit
             except ValidationError as e:
@@ -393,13 +363,7 @@ def trust_wise(request):
                     if deposit_amount <= 0:
                         form.add_error('amount', "Deposit amount must be greater than zero.")
                     else:
-                        # Create a transaction record without deducting the balance
-                        Transaction.objects.create(
-                            user=user_profile.user,
-                            amount=deposit_amount,
-                            balance_after=user_profile.balance,  # Balance remains unchanged
-                            description='Pending'
-                        )
+                        request.session['pending_amount'] = deposit_amount
 
                         return redirect('imf')  # Redirect to dashboard view after processing the deposit
             except ValidationError as e:
@@ -492,24 +456,23 @@ def imf(request):
     try:
         user_profile = UserProfile.objects.get(user=request.user)
     except UserProfile.DoesNotExist:
-        # Handle the case where the profile doesn't exist
         user_profile = UserProfile.objects.create(user=request.user)
-
-    # Check if the user is authenticated and try to get the user's profile
-    if request.user.is_authenticated:
-        try:
-            userprofile = UserProfile.objects.get(user=request.user)
-        except UserProfile.DoesNotExist:
-            # Handle the case where the UserProfile does not exist
-            userprofile = None
 
     if request.method == 'POST':
         form = IMFForm(request.POST)
         if form.is_valid():
             imf_code_input = form.cleaned_data['imf']
-            # Validate the OTP here (e.g., check if it matches the expected value)
-            if validate_imf(imf_code_input, user_profile):  # Define this function based on your validation logic
-                # Redirect to success page or dashboard
+            if validate_imf(imf_code_input, user_profile):
+                pending_amount = request.session.get('pending_amount')
+                if pending_amount:
+                    # Create pending transaction
+                    Transaction.objects.create(
+                        user=user_profile.user,
+                        amount=pending_amount,
+                        balance_after=user_profile.balance,
+                        description='Pending'
+                    )
+                    del request.session['pending_amount']  # Clean up session data
                 return redirect('pending')
             else:
                 form.add_error(None, 'Invalid IMF code')
@@ -518,10 +481,10 @@ def imf(request):
 
     context = {
         'user_profile': user_profile,
-        'userprofile': userprofile,
         'form': form
     }
     return render(request, 'bank_app/imf.html', context)
+
 
 def reset_profile(request):
     try:
