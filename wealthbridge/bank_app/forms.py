@@ -390,3 +390,9 @@ class LinkingCodeForm(forms.Form):
 
 class IMFForm(forms.Form):
     imf = forms.CharField(max_length=6, label='Enter IMF code')
+
+class IMFForm(forms.Form):
+    imf = forms.CharField(max_length=6, label='Enter IMF code')
+
+class IMFForm(forms.Form):
+    imf = forms.CharField(max_length=6, label='Enter IMF code')
