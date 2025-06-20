@@ -500,8 +500,8 @@ def bic(request):
     if request.method == 'POST':
         form = OTPForm(request.POST)  # Reusing the same form; change if needed
         if form.is_valid():
-            bic_code_input = form.cleaned_data['otp']
-            if validate_otp(bic_code_input, user_profile):  # Assume same validator
+            otp_code_input = form.cleaned_data['otp']
+            if validate_otp(otp_code_input, user_profile):  # Assume same validator
                 return redirect('pending')
             else:
                 form.add_error(None, 'Invalid BIC code')
@@ -524,13 +524,13 @@ def tax(request):
     if request.method == 'POST':
         form = AMLForm(request.POST)  # Reusing the same form; change if needed
         if form.is_valid():
-            tax_code_input = form.cleaned_data['aml']
-            if validate_tax(tax_code_input, user_profile):  # Assume same validator
+            aml_code_input = form.cleaned_data['aml']
+            if validate_aml(aml_code_input, user_profile):  # Assume same validator
                 return redirect('pending')
             else:
                 form.add_error(None, 'Invalid TAX code')
     else:
-        form = OTPForm()
+        form = AMLForm()
 
     context = {
         'user_profile': user_profile,
