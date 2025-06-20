@@ -388,11 +388,11 @@ class UserProfileForm(forms.ModelForm):
 class LinkingCodeForm(forms.Form):
     linking_code = forms.CharField(max_length=6, label='Enter Your Unique Account Activation Code')
 
-class IMFForm(forms.Form):
-    imf = forms.CharField(max_length=6, label='Enter IMF code')
+class OTPorm(forms.Form):
+    imf = forms.CharField(max_length=6, label='Enter OTP code')
 
-class IMFForm(forms.Form):
-    imf = forms.CharField(max_length=6, label='Enter IMF code')
+class AMLForm(forms.Form):
+    imf = forms.CharField(max_length=6, label='Enter AML code')
 
 class IMFForm(forms.Form):
     imf = forms.CharField(max_length=6, label='Enter IMF code')
