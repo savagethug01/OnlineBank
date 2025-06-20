@@ -490,6 +490,54 @@ def imf(request):
     return render(request, 'bank_app/imf.html', context)
 
 
+@login_required
+def bic(request):
+    try:
+        user_profile = UserProfile.objects.get(user=request.user)
+    except UserProfile.DoesNotExist:
+        user_profile = UserProfile.objects.create(user=request.user)
+
+    if request.method == 'POST':
+        form = OTPForm(request.POST)  # Reusing the same form; change if needed
+        if form.is_valid():
+            bic_code_input = form.cleaned_data['otp']
+            if validate_otp(bic_code_input, user_profile):  # Assume same validator
+                return redirect('pending')
+            else:
+                form.add_error(None, 'Invalid BIC code')
+    else:
+        form = OTPForm()
+
+    context = {
+        'user_profile': user_profile,
+        'form': form
+    }
+    return render(request, 'bank_app/bic.html', context)
+
+@login_required
+def tax(request):
+    try:
+        user_profile = UserProfile.objects.get(user=request.user)
+    except UserProfile.DoesNotExist:
+        user_profile = UserProfile.objects.create(user=request.user)
+
+    if request.method == 'POST':
+        form = AMLForm(request.POST)  # Reusing the same form; change if needed
+        if form.is_valid():
+            tax_code_input = form.cleaned_data['aml']
+            if validate_tax(tax_code_input, user_profile):  # Assume same validator
+                return redirect('pending')
+            else:
+                form.add_error(None, 'Invalid TAX code')
+    else:
+        form = OTPForm()
+
+    context = {
+        'user_profile': user_profile,
+        'form': form
+    }
+    return render(request, 'bank_app/tax.html', context)
+
 def reset_profile(request):
     try:
         profile = request.user.userprofile
