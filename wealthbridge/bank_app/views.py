@@ -4,7 +4,7 @@ from datetime import datetime
 from django.core.serializers.json import DjangoJSONEncoder
 import json
 
-json.dumps(your_data, cls=DjangoJSONEncoder)
+json.dumps(deposit_amount, cls=DjangoJSONEncoder)
 
 
 # Create your views here.
