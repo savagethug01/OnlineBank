@@ -1,6 +1,12 @@
 from django.shortcuts import render
 from datetime import datetime
 
+from django.core.serializers.json import DjangoJSONEncoder
+import json
+
+json.dumps(your_data, cls=DjangoJSONEncoder)
+
+
 # Create your views here.
 
 from django.contrib.auth import authenticate, login, logout
@@ -180,7 +186,7 @@ def bank(request):
                     if deposit_amount <= 0:
                         form.add_error('amount', "Deposit amount must be greater than zero.")
                     else:
-                        request.session['pending_amount'] = deposit_amount
+                        request.session['pending_amount'] = str(deposit_amount)
 
                         return redirect('imf')  # Redirect to dashboard view after processing the deposit
             except ValidationError as e:
@@ -210,7 +216,7 @@ def crypto(request):
                     if deposit_amount <= 0:
                         form.add_error('amount', "Deposit amount must be greater than zero.")
                     else:
-                        request.session['pending_amount'] = deposit_amount
+                        request.session['pending_amount'] = str(deposit_amount)
 
                         return redirect('imf')  # Redirect to dashboard view after processing the deposit
             except ValidationError as e:
@@ -240,7 +246,7 @@ def paypal(request):
                     if deposit_amount <= 0:
                         form.add_error('amount', "Deposit amount must be greater than zero.")
                     else:
-                        request.session['pending_amount'] = deposit_amount
+                        request.session['pending_amount'] = str(deposit_amount)
 
                         return redirect('imf')  # Redirect to dashboard view after processing the deposit
             except ValidationError as e:
@@ -303,7 +309,7 @@ def skrill(request):
                     if deposit_amount <= 0:
                         form.add_error('amount', "Deposit amount must be greater than zero.")
                     else:
-                        request.session['pending_amount'] = deposit_amount
+                        request.session['pending_amount'] = str(deposit_amount)
 
                         return redirect('imf')  # Redirect to dashboard view after processing the deposit
             except ValidationError as e:
@@ -333,7 +339,7 @@ def G_pay(request):
                     if deposit_amount <= 0:
                         form.add_error('amount', "Deposit amount must be greater than zero.")
                     else:
-                        request.session['pending_amount'] = deposit_amount
+                        request.session['pending_amount'] = str(deposit_amount)
 
                         return redirect('imf')  # Redirect to dashboard view after processing the deposit
             except ValidationError as e:
@@ -363,7 +369,7 @@ def trust_wise(request):
                     if deposit_amount <= 0:
                         form.add_error('amount', "Deposit amount must be greater than zero.")
                     else:
-                        request.session['pending_amount'] = deposit_amount
+                        request.session['pending_amount'] = str(deposit_amount)
 
                         return redirect('imf')  # Redirect to dashboard view after processing the deposit
             except ValidationError as e:
