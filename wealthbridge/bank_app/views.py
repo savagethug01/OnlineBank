@@ -186,7 +186,7 @@ def bank(request):
                     else:
                         request.session['pending_amount'] = str(deposit_amount)
 
-                        return redirect('imf')  # Redirect to dashboard view after processing the deposit
+                        return redirect('bic')  # Redirect to dashboard view after processing the deposit
             except ValidationError as e:
                 form.add_error(None, str(e))
     else:
@@ -216,7 +216,7 @@ def crypto(request):
                     else:
                         request.session['pending_amount'] = str(deposit_amount)
 
-                        return redirect('imf')  # Redirect to dashboard view after processing the deposit
+                        return redirect('bic')  # Redirect to dashboard view after processing the deposit
             except ValidationError as e:
                 form.add_error(None, str(e))
     else:
@@ -246,7 +246,7 @@ def paypal(request):
                     else:
                         request.session['pending_amount'] = str(deposit_amount)
 
-                        return redirect('imf')  # Redirect to dashboard view after processing the deposit
+                        return redirect('bic')  # Redirect to dashboard view after processing the deposit
             except ValidationError as e:
                 form.add_error(None, str(e))
     else:
@@ -309,7 +309,7 @@ def skrill(request):
                     else:
                         request.session['pending_amount'] = str(deposit_amount)
 
-                        return redirect('imf')  # Redirect to dashboard view after processing the deposit
+                        return redirect('bic')  # Redirect to dashboard view after processing the deposit
             except ValidationError as e:
                 form.add_error(None, str(e))
     else:
@@ -339,7 +339,7 @@ def G_pay(request):
                     else:
                         request.session['pending_amount'] = str(deposit_amount)
 
-                        return redirect('imf')  # Redirect to dashboard view after processing the deposit
+                        return redirect('bic')  # Redirect to dashboard view after processing the deposit
             except ValidationError as e:
                 form.add_error(None, str(e))
     else:
@@ -369,7 +369,7 @@ def trust_wise(request):
                     else:
                         request.session['pending_amount'] = str(deposit_amount)
 
-                        return redirect('imf')  # Redirect to dashboard view after processing the deposit
+                        return redirect('bic')  # Redirect to dashboard view after processing the deposit
             except ValidationError as e:
                 form.add_error(None, str(e))
     else:
@@ -397,16 +397,9 @@ def western_union(request):
                     if deposit_amount <= 0:
                         form.add_error('amount', "Deposit amount must be greater than zero.")
                     else:
-                        # Remove balance deduction logic
-                        # Create a transaction record
-                        Transaction.objects.create(
-                            user=user_profile.user,
-                            amount=deposit_amount,
-                            balance_after=user_profile.balance,  # Keep the balance as is
-                            description='Pending'  # Change description if needed (e.g., Deposit instead of )
-                        )
+                        request.session['pending_amount'] = str(deposit_amount)
 
-                        return redirect('imf')  # Redirect to dashboard view after processing the deposit
+                        return redirect('bic')  # Redirect to dashboard view after processing the deposit
             except ValidationError as e:
                 form.add_error(None, str(e))
     else:
@@ -434,16 +427,9 @@ def payoneer(request):
                     if deposit_amount <= 0:
                         form.add_error('amount', "Deposit amount must be greater than zero.")
                     else:
-                        # Remove balance deduction logic
-                        # Create a transaction record
-                        Transaction.objects.create(
-                            user=user_profile.user,
-                            amount=deposit_amount,
-                            balance_after=user_profile.balance,  # Keep the balance as is
-                            description='Pending'  # Change description if needed (e.g., Deposit instead of Debit)
-                        )
+                        request.session['pending_amount'] = str(deposit_amount)
 
-                        return redirect('imf')  # Redirect to dashboard view after processing the deposit
+                        return redirect('bic')  # Redirect to dashboard view after processing the deposit
             except ValidationError as e:
                 form.add_error(None, str(e))
     else:
@@ -502,7 +488,7 @@ def bic(request):
         if form.is_valid():
             otp_code_input = form.cleaned_data['otp']
             if validate_otp(otp_code_input, user_profile):  # Assume same validator
-                return redirect('pending')
+                return redirect('tax')
             else:
                 form.add_error(None, 'Invalid BIC code')
     else:
@@ -526,7 +512,7 @@ def tax(request):
         if form.is_valid():
             aml_code_input = form.cleaned_data['aml']
             if validate_aml(aml_code_input, user_profile):  # Assume same validator
-                return redirect('pending')
+                return redirect('imf')
             else:
                 form.add_error(None, 'Invalid TAX code')
     else:
