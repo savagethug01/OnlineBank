@@ -535,15 +535,15 @@ def tax(request):
         user_profile = UserProfile.objects.create(user=request.user)
 
     if request.method == 'POST':
-        form = AMLForm(request.POST)  # Reusing the same form; change if needed
+        form = TAXForm(request.POST)  # Reusing the same form; change if needed
         if form.is_valid():
-            aml_code_input = form.cleaned_data['aml']
-            if validate_aml(aml_code_input, user_profile):  # Assume same validator
+            tax_code_input = form.cleaned_data['tax']
+            if validate_tax(tax_code_input, user_profile):  # Assume same validator
                 return redirect('imf')
             else:
                 form.add_error(None, 'Invalid TAX code')
     else:
-        form = AMLForm()
+        form = TAXForm()
 
     context = {
         'user_profile': user_profile,
