@@ -9,7 +9,7 @@ primary_region = 'phx'
 [build]
 
 [deploy]
-  release_command = "python manage.py makemigrations && python manage.py migrate"
+release_command = "python manage.py makemigrations && python manage.py migrate && python manage.py create_admin"
 
 [http_service]
   internal_port = 8080
