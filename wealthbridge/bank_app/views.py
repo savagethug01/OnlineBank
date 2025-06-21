@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from datetime import datetime
+from decimal import Decimal
 
 from django.core.serializers.json import DjangoJSONEncoder
 import json
