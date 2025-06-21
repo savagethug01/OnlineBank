@@ -265,6 +265,14 @@
                 </div>
 
                 <div class="input-box">
+                    <span class="details">Email</span>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                        <p class="error-message">{{ form.email.errors }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="input-box">
                     <span class="details">Date of Birth</span>
                     {{ form.date_of_birth }}
                     {% if form.date_of_birth.errors %}
