@@ -2,6 +2,11 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+from django.conf import settings
+
+if os.environ.get("DJANGO_SUPPRESS_PROMPTS", "false").lower() == "true":
+    from django.db.migrations import questioner
+    questioner.default_questioner = questioner.NonInteractiveQuestioner()
 
 
 def main():
