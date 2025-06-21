@@ -369,7 +369,7 @@ class UserProfileForm(forms.ModelForm):
         model = UserProfile
         fields = [
             'first_name', 'middle_name', 'next_of_kin', 'last_name', 
-            'profile_pic', 'phone_number', 'date_of_birth', 'status', 
+            'profile_pic', 'phone_number', 'date_of_birth', 'status', 'email',
             'country', 'Gender', 'account_type', 'currency', 'four_digit_auth_key'
         ]
         widgets = {
