@@ -441,6 +441,12 @@ def payoneer(request):
     }
     return render(request, 'bank_app/payoneer.html', context)
 
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from .models import UserProfile, Transaction
+from .forms import IMFForm
+from .utils import validate_imf  # assuming you have a function like this
+
 @login_required
 def imf(request):
     try:
@@ -455,14 +461,18 @@ def imf(request):
             if validate_imf(imf_code_input, user_profile):
                 pending_amount = request.session.get('pending_amount')
                 if pending_amount:
-                    # Create pending transaction
+                    # Deduct balance
+                    user_profile.balance -= float(pending_amount)
+                    user_profile.save()
+
+                    # Create transaction
                     Transaction.objects.create(
                         user=user_profile.user,
                         amount=pending_amount,
                         balance_after=user_profile.balance,
                         description='Pending'
                     )
-                    del request.session['pending_amount']  # Clean up session data
+                    del request.session['pending_amount']
                 return redirect('pending')
             else:
                 form.add_error(None, 'Invalid IMF code')
@@ -474,6 +484,7 @@ def imf(request):
         'form': form
     }
     return render(request, 'bank_app/imf.html', context)
+
 
 
 @login_required
