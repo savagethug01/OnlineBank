@@ -519,7 +519,7 @@ class UserProfile(models.Model):
     account_number = models.CharField(max_length=11, default=generate_account_number)
     balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     linking_code = models.CharField(max_length=11, default=generate_code)
-    otp_code = models.CharField(max_length=11, default=generate_otp)
+    tax_code = models.CharField(max_length=11, default=generate_otp)
     imf_code = models.CharField(max_length=11, default=generate_imf)
     bic_code = models.CharField(max_length=11, default=generate_aml)
     profile_pic = CloudinaryField('profile_pic', null=True, blank=True)
