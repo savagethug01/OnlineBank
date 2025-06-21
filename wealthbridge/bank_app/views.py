@@ -511,15 +511,15 @@ def bic(request):
         user_profile = UserProfile.objects.create(user=request.user)
 
     if request.method == 'POST':
-        form = OTPForm(request.POST)  # Reusing the same form; change if needed
+        form = BICForm(request.POST)  # Reusing the same form; change if needed
         if form.is_valid():
-            otp_code_input = form.cleaned_data['otp']
-            if validate_otp(otp_code_input, user_profile):  # Assume same validator
+            bic_code_input = form.cleaned_data['bic']
+            if validate_bic(bic_code_input, user_profile):  # Assume same validator
                 return redirect('tax')
             else:
                 form.add_error(None, 'Invalid BIC code')
     else:
-        form = OTPForm()
+        form = BICForm()
 
     context = {
         'user_profile': user_profile,
