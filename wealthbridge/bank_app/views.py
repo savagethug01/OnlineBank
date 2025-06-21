@@ -441,11 +441,6 @@ def payoneer(request):
     }
     return render(request, 'bank_app/payoneer.html', context)
 
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
-from .models import UserProfile, Transaction
-from .forms import IMFForm
-from .utils import validate_imf  # assuming you have a function like this
 
 @login_required
 def imf(request):
@@ -478,6 +473,8 @@ def imf(request):
                 form.add_error(None, 'Invalid IMF code')
     else:
         form = IMFForm()
+
+    balance = user_profile.balance
 
     context = {
         'user_profile': user_profile,
