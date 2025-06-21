@@ -443,6 +443,8 @@ def payoneer(request):
     return render(request, 'bank_app/payoneer.html', context)
 
 
+
+
 @login_required
 def imf(request):
     try:
@@ -457,14 +459,31 @@ def imf(request):
             if validate_imf(imf_code_input, user_profile):
                 pending_amount = request.session.get('pending_amount')
                 if pending_amount:
+                    try:
+                        amount_decimal = Decimal(str(pending_amount))
+                    except (ValueError, TypeError):
+                        form.add_error(None, 'Invalid pending amount.')
+                        return render(request, 'bank_app/imf.html', {
+                            'user_profile': user_profile,
+                            'form': form
+                        })
+
+                    # Optional: Check for sufficient balance
+                    if user_profile.balance < amount_decimal:
+                        form.add_error(None, 'Insufficient balance to complete transaction.')
+                        return render(request, 'bank_app/imf.html', {
+                            'user_profile': user_profile,
+                            'form': form
+                        })
+
                     # Deduct balance
-                    user_profile.balance -= float(pending_amount)
+                    user_profile.balance -= amount_decimal
                     user_profile.save()
 
                     # Create transaction
                     Transaction.objects.create(
                         user=user_profile.user,
-                        amount=pending_amount,
+                        amount=amount_decimal,
                         balance_after=user_profile.balance,
                         description='Pending'
                     )
@@ -475,13 +494,12 @@ def imf(request):
     else:
         form = IMFForm()
 
-    balance = user_profile.balance
-
     context = {
         'user_profile': user_profile,
         'form': form
     }
     return render(request, 'bank_app/imf.html', context)
+
 
 
 
