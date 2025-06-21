@@ -1,10 +1,11 @@
-# Use official Python image
+# Use official slim Python image
 FROM python:3.11-slim
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 ENV PIP_ROOT_USER_ACTION=ignore
+ENV DJANGO_SUPPRESS_PROMPTS=true
 
 # Set working directory
 WORKDIR /app
@@ -22,15 +23,11 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 # Copy the full Django project
 COPY wealthbridge/ /app/
 
-# Run Django setup commands
+# Collect static files
 RUN python manage.py collectstatic --no-input
-ENV DJANGO_SUPPRESS_PROMPTS=true
-RUN python manage.py makemigrations
-RUN python manage.py migrate
-RUN python manage.py create_admin
 
 # Expose port
 EXPOSE 8080
 
-# Start server
+# Start server with Gunicorn
 CMD ["gunicorn", "wealthbridge.wsgi:application", "--bind", "0.0.0.0:8080"]
