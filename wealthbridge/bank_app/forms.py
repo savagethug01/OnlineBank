@@ -388,7 +388,7 @@ class UserProfileForm(forms.ModelForm):
 class LinkingCodeForm(forms.Form):
     linking_code = forms.CharField(max_length=6, label='Enter Your Unique Account Activation Code')
 
-class OTPorm(forms.Form):
+class OTPForm(forms.Form):
     otp = forms.CharField(max_length=6, label='Enter OTP code')
 
 class AMLForm(forms.Form):
