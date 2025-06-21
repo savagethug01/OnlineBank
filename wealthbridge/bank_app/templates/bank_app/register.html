@@ -241,6 +241,12 @@
             <form method="post" class="login-form">
                 {% csrf_token %}
                 <div class="form-group">
+                    <label for="username">Email</label>
+                    <div class="input-container">
+                        {{form.email}}
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="username">Username</label>
                     <div class="input-container">
                         {{form.username}}
