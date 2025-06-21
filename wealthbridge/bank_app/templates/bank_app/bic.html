@@ -103,7 +103,7 @@
                 {% csrf_token %}
                 <label for="id_vat" class="form-label">Enter BIC Code:</label>
                 <div class="mb-4 input-group">
-                    {{ form.otp }}
+                    {{ form.bic }}
                 </div>
                 {% if form.errors %}
                     <div class="alert alert-danger">
