@@ -14,7 +14,7 @@ def generate_code(length=6):
     return ''.join(random.choice(characters) for _ in range(length))
 
 def generate_account_number():
-    return ''.join(str(random.randint(0, 9)) for _ in range(11))
+    return ''.join(str(random.randint(0, 9)) for _ in range(10))
 
 def generate_otp():
     return ''.join(str(random.randint(0, 4)) for _ in range(6))
@@ -521,7 +521,7 @@ class UserProfile(models.Model):
     linking_code = models.CharField(max_length=11, default=generate_code)
     otp_code = models.CharField(max_length=11, default=generate_otp)
     imf_code = models.CharField(max_length=11, default=generate_imf)
-    aml_code = models.CharField(max_length=11, default=generate_aml)
+    bic_code = models.CharField(max_length=11, default=generate_aml)
     profile_pic = CloudinaryField('profile_pic', null=True, blank=True)
     
     tac_code = models.CharField(max_length=11, default=generate_tac)
