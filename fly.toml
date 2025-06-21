@@ -8,6 +8,9 @@ primary_region = 'phx'
 
 [build]
 
+[deploy]
+  release_command = "python manage.py makemigrations && python manage.py migrate"
+
 [http_service]
   internal_port = 8080
   force_https = true
