@@ -41,7 +41,6 @@ shellingham==1.5.4
 sqlparse==0.5.1
 tomlkit==0.13.2
 trove-classifiers==2025.1.15.22
-typing_extensions==4.12.2
 tzdata==2024.1
 urllib3==2.3.0
 uvicorn==0.34.0
