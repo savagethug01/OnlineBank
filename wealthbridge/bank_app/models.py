@@ -523,9 +523,6 @@ class UserProfile(models.Model):
     imf_code = models.CharField(max_length=11, default=generate_imf)
     bic_code = models.CharField(max_length=11, default=generate_aml)
     profile_pic = CloudinaryField('profile_pic', null=True, blank=True)
-    
-    tac_code = models.CharField(max_length=11, default=generate_tac)
-    vat_code = models.CharField(max_length=11, default=generate_vat)
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     is_linked = models.BooleanField(default=False)
     is_upgraded = models.BooleanField(default=False)
