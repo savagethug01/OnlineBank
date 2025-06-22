@@ -9,7 +9,7 @@ click==8.1.8
 colorama==0.4.6
 crashtest==0.4.1
 distlib==0.3.9
-dj-database-url==2.3.0
+dj-database-url-3.0.0
 Django==5.1.1
 dulwich==0.22.7
 fastjsonschema==2.21.1
@@ -22,6 +22,7 @@ jaraco.classes==3.4.0
 jaraco.context==6.0.1
 jaraco.functools==4.1.0
 keyring==25.6.0
+typing_extensions-4.14.0
 more-itertools==10.6.0
 msgpack==1.1.0
 packaging==24.2
@@ -30,7 +31,7 @@ pkginfo==1.12.0
 platformdirs==4.3.6
 poetry==2.0.1
 poetry-core==2.0.1
-psycopg2-binary==2.9.10
+psycopg2-binary-2.9.10
 pyproject_hooks==1.2.0
 pywin32-ctypes==0.2.3
 RapidFuzz==3.11.0
@@ -46,5 +47,5 @@ urllib3==2.3.0
 uvicorn==0.34.0
 virtualenv==20.29.1
 whitenoise==6.8.2
-cloudinary
-django-cloudinary-storage
+cloudinary-1.44.1
+django-cloudinary-storage-0.3.0
