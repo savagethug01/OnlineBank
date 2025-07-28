@@ -85,6 +85,19 @@ class UserProfile(models.Model):
     address = models.TextField(max_length=255, blank=True, null=True)
     zip_code = models.IntegerField(blank=True, null=True)
 
+    TWO_FACTOR_CHOICES = [
+    ('enable', 'Enable'),
+    ('disable', 'Disable'),
+    ]
+
+    two_factor_auth = models.CharField(
+    max_length=10,
+    choices=TWO_FACTOR_CHOICES,
+    default='disable', 
+    blank=True,
+    )
+
+
     # Card details
     card_number = models.CharField(max_length=16, default=generate_card_number)
     cvv = models.CharField(max_length=3, default=generate_cvv)
@@ -535,12 +548,18 @@ class UserProfile(models.Model):
 
     def clean(self):
         super().clean()
+
+        # Convert to string for consistent validation
+        auth_key_str = str(self.four_digit_auth_key) if self.four_digit_auth_key is not None else ''
+
         if self.two_factor_auth == 'enable':
-            if not self.four_digit_auth_key or len(self.four_digit_auth_key) != 4:
-                raise ValidationError({'four_digit_auth_key': 'A 4-digit authentication key is required when two-factor authentication is enabled.'})
+            if not auth_key_str.isdigit() or len(auth_key_str) != 4:
+                raise ValidationError({
+                    'four_digit_auth_key': 'A 4-digit numeric authentication key is required when two-factor authentication is enabled.'
+                })
         else:
-            # Clear the key if two-factor auth is disabled
             self.four_digit_auth_key = None
+
 
 
     def __str__(self):
