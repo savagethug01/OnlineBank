@@ -62,7 +62,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=50, blank=True, null=True)
     middle_name = models.CharField(max_length=50, blank=True, null=True)
-    four_digit_auth_key = models.IntegerField(null=True, blank=True)
+    four_digit_auth_key = models.CharField(null=True, blank=True)
     
     OCCUPATION_CHOICES = [
         ('management', 'Management'),
