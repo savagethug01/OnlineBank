@@ -93,7 +93,7 @@ class UserProfile(models.Model):
     two_factor_auth = models.CharField(
     max_length=10,
     choices=TWO_FACTOR_CHOICES,
-    default='disable', 
+    default='Enable', 
     blank=True,
     )
 
