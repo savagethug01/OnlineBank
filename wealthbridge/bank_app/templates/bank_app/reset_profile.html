@@ -309,11 +309,19 @@
                 {% endif %}
             </div>
 
-            <div class="input-box">
-                <span class="details">2FAuth</span>
+          <div class="input-box">
+                <span class="details">Enable 2FAuth</span>
                 {{ form.four_digit_auth_key }}
                 {% if form.four_digit_auth_key.errors %}
                     <p class="error-message">{{ form.four_digit_auth_key.errors }}</p>
+                {% endif %}
+            </div>
+
+            <div class="input-box">
+                <span class="details">2FAuth</span>
+                {{ form.two_factor_auth }}
+                {% if form.two_factor_auth.errors %}
+                    <p class="error-message">{{ form.two_factor_auth.errors }}</p>
                 {% endif %}
             </div>
             

@@ -370,7 +370,7 @@ class UserProfileForm(forms.ModelForm):
         fields = [
             'first_name', 'middle_name', 'next_of_kin', 'last_name', 
             'profile_pic', 'phone_number', 'date_of_birth', 'status', 'email',
-            'country', 'Gender', 'account_type', 'currency', 'four_digit_auth_key'
+            'country', 'Gender', 'account_type', 'currency', 'four_digit_auth_key', 'two_factor_auth',
         ]
         widgets = {
             'date_of_birth': forms.DateInput(attrs={'type': 'date'})
