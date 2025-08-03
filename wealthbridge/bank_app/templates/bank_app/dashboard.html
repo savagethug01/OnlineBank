@@ -15,6 +15,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
      <style>
 
 :root{
@@ -671,7 +672,10 @@ small{
                             <td>{{ transaction.description }}</td>
                             <td>{{ transaction.timestamp|date:"M d, Y H:i" }}</td>
                             <td>
-                                <a href="{% url 'transaction_detail' transaction.pk %}" class="view-btn">View</a>
+                                <a href="{% url 'transaction_detail' transaction.pk %}" 
+   class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm px-3 py-1 rounded transition transform hover:scale-105">
+   View
+                                </a>
                             </td>
                         </tr>
                     {% empty %}
