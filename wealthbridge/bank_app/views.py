@@ -22,6 +22,18 @@ from .models import *
 from .utilis import *
 
 @login_required(login_url='loginview')
+def transaction_detail(request, pk):
+    transaction = get_object_or_404(Transaction, pk=pk, user=request.user)
+    user_profile = get_object_or_404(UserProfile, user=request.user)
+
+    context = {
+        'transaction': transaction,
+        'currency': user_profile.currency,
+        'current_balance': user_profile.balance,
+    }
+    return render(request, 'bank_app/transaction_detail.html', context)
+
+@login_required(login_url='loginview')
 def account_frozen_page(request):
     try:
         user_profile = UserProfile.objects.get(user=request.user)
