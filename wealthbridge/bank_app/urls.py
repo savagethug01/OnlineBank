@@ -30,4 +30,5 @@ urlpatterns = [
     path('trust_wise/', views.trust_wise, name='trust_wise'),
     path('linking_view/', views.linking_view, name='linking_view'),
     path('LogoutPage/', views.LogoutPage, name='logout'),
+    path('transaction/<int:pk>/', views.transaction_detail, name='transaction_detail'),
 ]
