@@ -12,7 +12,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.db import transaction
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import CustomUserCreationForm  # Ensure you have your custom form imported
 from .decorators import unauthenticated_user  # Import your decorator
 from django.contrib.auth.decorators import login_required
