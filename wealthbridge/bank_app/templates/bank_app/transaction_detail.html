@@ -8,6 +8,17 @@
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    body{
+            background-size: cover;
+            background-position: center;
+            background-repeat:no-repeat;
+            background-image: url("{% static 'images/bg.jpg' %}");
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+    }
     @keyframes fadeInUp {
       from { transform: translateY(20px); opacity: 0; }
       to { transform: translateY(0); opacity: 1; }
