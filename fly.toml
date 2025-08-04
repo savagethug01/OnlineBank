@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for starling-bank on 2025-06-19T14:17:56Z
+# fly.toml app configuration file generated for starling-bank on 2025-08-04T00:56:26Z
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -7,9 +7,6 @@ app = 'starling-bank'
 primary_region = 'phx'
 
 [build]
-
-[deploy]
-release_command = "sh -c 'python manage.py makemigrations && python manage.py migrate && python manage.py create_admin'"
 
 [http_service]
   internal_port = 8080
