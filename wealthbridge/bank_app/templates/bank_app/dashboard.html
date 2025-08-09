@@ -527,9 +527,15 @@ small{
                 <a href="{% url 'setting' %}">Accounts</a>
                 <a href="{% url 'transaction' %}">Transactions</a>
                 <a href="{% url 'reset_profile' %}">Settings</a>
-                <a href="{% url 'loans' %}">Loans</a>
+
+                {% if user_profile.cardholder_name %}
+                    <a href="{% url 'card_list' %}">Cards</a>
+                {% endif %}
+
+                <a href="{% url 'application_for_credit_card' %}">Apply For Card</a>
                 <a href="{% url 'logout' %}">Logout</a>
             </div>
+
         </nav>
 
 

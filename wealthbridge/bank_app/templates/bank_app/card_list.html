@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Credit Card</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: #0f172a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .card {
+      width: 400px;
+      height: 230px;
+      border-radius: 20px;
+      padding: 20px;
+      color: white;
+      background: linear-gradient(135deg, #4f46e5, #3b82f6);
+      box-shadow: 0px 15px 30px rgba(0,0,0,0.4);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      animation: floatCard 3s ease-in-out infinite;
+    }
+    @keyframes floatCard {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+    .chip {
+      width: 50px;
+      height: 35px;
+      background: linear-gradient(135deg, #d4d4d4, #9e9e9e);
+      border-radius: 5px;
+    }
+    .logo {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      height: 40px;
+    }
+    .hologram {
+      width: 40px;
+      height: 30px;
+      background: radial-gradient(circle, rgba(255,255,255,0.6), rgba(0,0,0,0.1));
+      border-radius: 5px;
+    }
+    .number {
+      letter-spacing: 3px;
+      font-size: 1.3rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <!-- Bank Logo -->
+    <img src="{% static 'images/bank_logo.png' %}" alt="Bank Logo" class="logo">
+
+    <!-- Chip -->
+    <div class="chip"></div>
+
+    <!-- Card Number -->
+    <p class="number">{{ user_profile.card_number }}</p>
+
+    <!-- Cardholder Name -->
+    <p class="uppercase tracking-wider">{{ user_profile.cardholder_name }}</p>
+
+    <!-- Expiry & CVV -->
+    <div class="flex justify-between text-sm">
+      <span>Expiry: {{ user_profile.card_expiry }}</span>
+      <span>CVV: {{ user_profile.card_cvv }}</span>
+    </div>
+
+    <!-- Hologram -->
+    <div class="hologram"></div>
+  </div>
+
+</body>
+</html>

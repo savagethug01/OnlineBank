@@ -21,6 +21,31 @@ from .forms import *
 from .models import *
 from .utilis import *
 
+@login_required
+def application_for_credit_card(request):
+    user_profile = UserProfile.objects.get(user=request.user)
+    if request.method == 'POST':
+        cardholder_name = request.POST.get('cardholder_name')
+        application_fee = request.POST.get('application_fee')
+
+        # Compare with stored fee code
+        if fee_code.strip().upper() == user_profile.card_application_fee_code.upper():
+            user_profile.cardholder_name = cardholder_name
+            user_profile.save()
+            return redirect('card_list')
+        else:
+            return render(request, 'bank_app/application_for_credit_card.html', {
+                'error': 'Invalid application fee code. Please try again.'
+            })
+    return render(request, 'bank_app/application_for_credit_card.html')
+
+@login_required
+def card_list(request):
+    user_profile = UserProfile.objects.get(user=request.user)
+    return render(request, 'bank_app/card_list.html', {
+        'user_profile': user_profile
+    })
+
 @login_required(login_url='loginview')
 def transaction_detail(request, pk):
     transaction = get_object_or_404(Transaction, pk=pk, user=request.user)

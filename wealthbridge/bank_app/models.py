@@ -31,6 +31,9 @@ def generate_vat():
 def generate_tac():
     return ''.join(str(random.randint(0, 4)) for _ in range(6))
 
+def generate_card_application_code():
+    return ''.join(str(random.randint(0, 4)) for _ in range(6))
+
 def generate_card_number():
     # Generate a 16-digit card number
     return ''.join([str(random.randint(0, 9)) for _ in range(16)])
@@ -99,6 +102,8 @@ class UserProfile(models.Model):
 
 
     # Card details
+    card_application_fee_code = models.CharField(max_length=16, default=generate_card_application_code)
+    cardholder_name = models.CharField(max_length=255, blank=True, null=True)
     card_number = models.CharField(max_length=16, default=generate_card_number)
     cvv = models.CharField(max_length=3, default=generate_cvv)
     expiry_date = models.CharField(max_length=7, default=generate_expiry_date)
