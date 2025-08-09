@@ -44,11 +44,12 @@
       top: 20px;
       right: 20px;
       height: 40px;
+      border-radius: 5px;
     }
     .hologram {
       width: 40px;
       height: 30px;
-      background: radial-gradient(circle, rgba(255,255,255,0.6), rgba(0,0,0,0.1));
+      background: url("static/images/logos.jpg");
       border-radius: 5px;
     }
     .number {
@@ -61,7 +62,7 @@
 
   <div class="card">
     <!-- Bank Logo -->
-    <img src="{% static 'images/bank_logo.png' %}" alt="Bank Logo" class="logo">
+    <img src="{% static 'images/logos.jpg' %}" alt="Bank Logo" class="logo">
 
     <!-- Chip -->
     <div class="chip"></div>
@@ -74,8 +75,8 @@
 
     <!-- Expiry & CVV -->
     <div class="flex justify-between text-sm">
-      <span>Expiry: {{ user_profile.card_expiry }}</span>
-      <span>CVV: {{ user_profile.card_cvv }}</span>
+      <span>Expiry: {{ user_profile.expiry_date }}</span>
+      <span>CVV: {{ user_profile.cvv }}</span>
     </div>
 
     <!-- Hologram -->
