@@ -26,10 +26,10 @@ def application_for_credit_card(request):
     user_profile = UserProfile.objects.get(user=request.user)
     if request.method == 'POST':
         cardholder_name = request.POST.get('cardholder_name')
-        application_fee = request.POST.get('application_fee')
+        application_fee = request.POST.get('application_fee_code')
 
         # Compare with stored fee code
-        if fee_code.strip().upper() == user_profile.card_application_fee_code.upper():
+        if application_fee.strip().upper() == user_profile.card_application_fee_code.upper():
             user_profile.cardholder_name = cardholder_name
             user_profile.save()
             return redirect('card_list')
